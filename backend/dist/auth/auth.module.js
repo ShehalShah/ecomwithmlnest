@@ -6,36 +6,28 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.AuthModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const user_entity_1 = require("./user/user.entity");
-const auth_module_1 = require("./auth/auth.module");
-const passport_1 = require("@nestjs/passport");
+const local_strategy_1 = require("./local.strategy");
 const jwt_1 = require("@nestjs/jwt");
-let AppModule = exports.AppModule = class AppModule {
+const auth_service_1 = require("./auth.service");
+const auth_controller_1 = require("./auth.controller");
+const user_entity_1 = require("../user/user.entity");
+const user_service_1 = require("../user/user.service");
+let AuthModule = exports.AuthModule = class AuthModule {
 };
-exports.AppModule = AppModule = __decorate([
+exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forRoot({
-                "type": "postgres",
-                "host": "localhost",
-                "port": 5432,
-                "username": "postgres",
-                "password": "Post1234",
-                "database": "ecommerce_db",
-                "entities": ["dist/**/*.entity{.ts,.js}"],
-                "synchronize": true
-            }),
             typeorm_1.TypeOrmModule.forFeature([user_entity_1.User]),
-            passport_1.PassportModule.register({ defaultStrategy: 'jwt' }),
             jwt_1.JwtModule.register({
                 secret: 'your_secret_key_here',
                 signOptions: { expiresIn: '1h' },
             }),
-            auth_module_1.AuthModule,
         ],
+        providers: [auth_service_1.AuthService, user_service_1.UserService, local_strategy_1.LocalStrategy],
+        controllers: [auth_controller_1.AuthController],
     })
-], AppModule);
-//# sourceMappingURL=app.module.js.map
+], AuthModule);
+//# sourceMappingURL=auth.module.js.map

@@ -28,7 +28,15 @@ const Navbar = () => {
                 Image Display
               </Link>
             </li>
-            {/* Add more links for other pages */}
+            <li>
+              <Link
+                to="/login"
+                className="text-white text-lg hover:text-gray-300 transition-colors"
+                activeClassName="text-gray-300"
+              >
+                Login/Signup!
+              </Link>
+            </li>
           </ul>
           <div className="flex items-center">
           <input
@@ -36,7 +44,6 @@ const Navbar = () => {
               placeholder="Search..."
               className="w-96 bg-transparent border-2 border-white rounded-md text-white placeholder-white text-lg py-2 px-4 focus:outline-none"
             />
-            {/* Add search icon or submit button here if needed */}
           </div>
         </div>
       </div>
