@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
+import axios from 'axios';
 
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -33,9 +34,14 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
+    try {
+      const response = await axios.post('http://localhost:3000/auth/login', { email, password });
+      console.log(response.data); 
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -81,9 +87,14 @@ const SignupForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Handle signup logic here
+    try {
+      const response = await axios.post('http://localhost:3000/auth/signup', { name, email, password });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
