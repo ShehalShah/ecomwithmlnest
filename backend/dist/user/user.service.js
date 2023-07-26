@@ -34,6 +34,17 @@ let UserService = exports.UserService = class UserService {
         user.clicked_products = [];
         return this.userRepository.save(user);
     }
+    async addToClickedProducts(userId, productId) {
+        const user = await this.userRepository.findOne({ where: { id: userId } });
+        if (!user) {
+            return null;
+        }
+        user.clicked_products.push(productId);
+        return this.userRepository.save(user);
+    }
+    async findById(userId) {
+        return this.userRepository.findOne({ where: { id: userId } });
+    }
 };
 exports.UserService = UserService = __decorate([
     (0, common_1.Injectable)(),

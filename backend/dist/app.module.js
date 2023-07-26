@@ -13,6 +13,8 @@ const user_entity_1 = require("./user/user.entity");
 const auth_module_1 = require("./auth/auth.module");
 const passport_1 = require("@nestjs/passport");
 const jwt_1 = require("@nestjs/jwt");
+const user_service_1 = require("./user/user.service");
+const user_controller_1 = require("./user/user.controller");
 let AppModule = exports.AppModule = class AppModule {
 };
 exports.AppModule = AppModule = __decorate([
@@ -36,6 +38,8 @@ exports.AppModule = AppModule = __decorate([
             }),
             auth_module_1.AuthModule,
         ],
+        controllers: [user_controller_1.UserController],
+        providers: [user_service_1.UserService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

@@ -5,4 +5,6 @@ export declare class UserService {
     constructor(userRepository: Repository<User>);
     findByEmail(email: string): Promise<User | undefined>;
     createUser(email: string, name: string, password: string): Promise<User>;
+    addToClickedProducts(userId: number, productId: number): Promise<User | null>;
+    findById(userId: number): Promise<User | undefined>;
 }

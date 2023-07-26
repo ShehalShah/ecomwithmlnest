@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
+  const nav=useNavigate()
   const [isLogin, setIsLogin] = useState(true);
 
   const handleSwitchForm = () => {
@@ -31,6 +33,7 @@ const LoginPage = () => {
 };
 
 const LoginForm = () => {
+  const nav=useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -39,6 +42,8 @@ const LoginForm = () => {
     try {
       const response = await axios.post('http://localhost:3000/auth/login', { email, password });
       console.log(response.data); 
+      sessionStorage.setItem('user', JSON.stringify(response.data));
+      nav("/")
     } catch (error) {
       console.error(error);
     }
@@ -83,6 +88,7 @@ const LoginForm = () => {
 };
 
 const SignupForm = () => {
+  const nav=useNavigate()
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -92,6 +98,8 @@ const SignupForm = () => {
     try {
       const response = await axios.post('http://localhost:3000/auth/signup', { name, email, password });
       console.log(response.data);
+      sessionStorage.setItem('user', JSON.stringify(response.data));
+      nav("/")
     } catch (error) {
       console.error(error);
     }

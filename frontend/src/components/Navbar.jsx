@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+  const user = JSON.parse(sessionStorage.getItem('user'));
   return (
     <nav className="bg-black p-4">
       <div className="container mx-auto">
@@ -28,7 +29,7 @@ const Navbar = () => {
                 Image Display
               </Link>
             </li>
-            <li>
+            {!user ? <li>
               <Link
                 to="/login"
                 className="text-white text-lg hover:text-gray-300 transition-colors"
@@ -36,7 +37,15 @@ const Navbar = () => {
               >
                 Login/Signup!
               </Link>
-            </li>
+            </li>:<li>
+              <Link
+                to="/login"
+                className="text-white text-lg hover:text-gray-300 transition-colors"
+                activeClassName="text-gray-300"
+              >
+                {user.user.name}
+              </Link>
+            </li>}
           </ul>
           <div className="flex items-center">
           <input

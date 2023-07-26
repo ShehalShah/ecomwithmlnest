@@ -11,4 +11,5 @@ export declare class AuthService {
         accessToken: string;
         user: User;
     }>;
+    validateUserById(userId: number): Promise<User | null>;
 }

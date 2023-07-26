@@ -15,6 +15,7 @@ const auth_service_1 = require("./auth.service");
 const auth_controller_1 = require("./auth.controller");
 const user_entity_1 = require("../user/user.entity");
 const user_service_1 = require("../user/user.service");
+const jwt_strategy_1 = require("./jwt.strategy");
 let AuthModule = exports.AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule = __decorate([
@@ -26,7 +27,7 @@ exports.AuthModule = AuthModule = __decorate([
                 signOptions: { expiresIn: '1h' },
             }),
         ],
-        providers: [auth_service_1.AuthService, user_service_1.UserService, local_strategy_1.LocalStrategy],
+        providers: [auth_service_1.AuthService, user_service_1.UserService, local_strategy_1.LocalStrategy, jwt_strategy_1.JwtStrategy],
         controllers: [auth_controller_1.AuthController],
     })
 ], AuthModule);

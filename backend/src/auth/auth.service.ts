@@ -37,4 +37,23 @@ export class AuthService {
     // Return the entire user object along with the access token
     return { accessToken, user };
   }
+
+  async validateUserById(userId: number): Promise<User | null> {
+    try {
+      // Implement logic to fetch the user from the database by ID
+      const user = await this.userService.findById(userId);
+      
+      if (user) {
+        // If the user is found, return the user object
+        return user;
+      } else {
+        // If the user is not found, return null
+        return null;
+      }
+    } catch (error) {
+      // Handle any errors that occurred during the database query
+      console.error(error);
+      return null;
+    }
+  }
 }

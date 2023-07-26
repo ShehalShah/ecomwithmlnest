@@ -36,6 +36,21 @@ let AuthService = exports.AuthService = class AuthService {
         const accessToken = this.jwtService.sign(payload);
         return { accessToken, user };
     }
+    async validateUserById(userId) {
+        try {
+            const user = await this.userService.findById(userId);
+            if (user) {
+                return user;
+            }
+            else {
+                return null;
+            }
+        }
+        catch (error) {
+            console.error(error);
+            return null;
+        }
+    }
 };
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),

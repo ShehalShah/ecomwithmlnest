@@ -6,6 +6,7 @@ import axios from 'axios';
 import { FaStar, FaHeart, FaShoppingCart } from 'react-icons/fa';
 
 const ImageDisplay = () => {
+  
   const nav=useNavigate()
   const [isGenderOpen, setIsGenderOpen] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
@@ -24,6 +25,26 @@ const ImageDisplay = () => {
     'Tops',
     'Sweatshirts',
   ];
+
+  const addToClickedProducts = async (productId) => {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    console.log(user.accessToken);
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${user.accessToken}`,
+    };
+
+    const data = {
+      productId: productId,
+    };
+
+    const response = await axios.post('http://localhost:3000/user/clickedproducts', data,{
+      headers,
+    } );
+
+    console.log(response);
+    nav(`/${productId}`)
+  };
   
 
   const handleMouseEnterGender = () => {
@@ -154,14 +175,13 @@ const ImageDisplay = () => {
         </div>
         <div className="flex-grow bg-black text-white py-10">
         <div className="container mx-auto">
-          {/* Render each section */}
           {Object.entries(recommendations).map(([section, products]) => (
             <div key={section}>
               <h2 className="text-2xl font-bold mb-4">{section}</h2>
               <div className="overflow-x-scroll">
               <div className="flex flex-row gap-3">
                 {products.map((product) => (
-                  <div key={product.id} className="w-[50%] h-auto cursor-pointer bg-white rounded-lg p-4" onClick={() => nav(`/${product.id}`)}>
+                  <div key={product.id} className="w-[50%] h-auto cursor-pointer bg-white rounded-lg p-4" onClick={() => addToClickedProducts(product.id)}>
                     <img src={product.link} alt={product.name} className="w-auto h-auto object-cover mb-4 rounded-lg" />
                     <h2 className="text-lg font-bold text-black">{product.name}</h2>
                     <div className='flex justify-between'>
