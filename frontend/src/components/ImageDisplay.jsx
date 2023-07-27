@@ -216,7 +216,9 @@ const ImageDisplay = () => {
         </div>
         <div className="flex-grow bg-black text-white py-10">
         <div className="container mx-auto">
-
+          {perrecommendations && <h2 className='text-3xl font-bold'> Personalized Recommendations</h2>}
+          <div className='bg-black border border-white rounded-lg shadow'>
+        <div className="flex flex-row gap-3 overflow-scroll p-4">
         {perrecommendations?.map((product) => (
                   <div key={product.id} className="w-[50%] h-auto cursor-pointer bg-white rounded-lg p-4" >
                     <img src={product.link} alt={product.name} className="w-auto h-auto object-cover mb-4 rounded-lg" />
@@ -234,6 +236,8 @@ const ImageDisplay = () => {
                   </div>
                   </div>
                 ))}
+                </div>
+                </div>
           {Object.entries(recommendations).map(([section, products]) => (
             <div key={section}>
               <h2 className="text-2xl font-bold mb-4">{section}</h2>
