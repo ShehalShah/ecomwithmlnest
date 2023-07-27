@@ -40,4 +40,33 @@ export class UserService {
   async findById(userId: number): Promise<User | undefined> {
     return this.userRepository.findOne({ where: { id:userId } });
   }
+
+  async addToWatchlist(userId: number, productId: number): Promise<User | null> {
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+
+    if (!user) {
+      return null;
+    }
+    
+    if (!user.watchlist.includes(productId)) {
+      user.watchlist.push(productId);
+    }
+
+    return this.userRepository.save(user);
+  }
+
+  async removeFromWatchlist(userId: number, productId: number): Promise<User | null> {
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+
+    if (!user) {
+      return null;
+    }
+
+    const index = user.watchlist.indexOf(productId);
+    if (index !== -1) {
+      user.watchlist.splice(index, 1);
+    }
+
+    return this.userRepository.save(user);
+  }
 }

@@ -25,6 +25,16 @@ let UserController = exports.UserController = class UserController {
         const updatedUser = await this.userService.addToClickedProducts(user.id, productId);
         return { user: updatedUser };
     }
+    async addToWatchlist(req, productId) {
+        const user = req.user;
+        const updatedUser = await this.userService.addToWatchlist(user.id, productId);
+        return { user: updatedUser };
+    }
+    async removeFromWatchlist(req, productId) {
+        const user = req.user;
+        const updatedUser = await this.userService.removeFromWatchlist(user.id, productId);
+        return { user: updatedUser };
+    }
 };
 __decorate([
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)()),
@@ -35,6 +45,24 @@ __decorate([
     __metadata("design:paramtypes", [Object, Number]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "addToClickedProducts", null);
+__decorate([
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)()),
+    (0, common_1.Post)('watchlist'),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Body)('productId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Number]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "addToWatchlist", null);
+__decorate([
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)()),
+    (0, common_1.Delete)('watchlist'),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Body)('productId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Number]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "removeFromWatchlist", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService])

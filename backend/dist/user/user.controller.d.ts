@@ -6,4 +6,10 @@ export declare class UserController {
     addToClickedProducts(req: any, productId: number): Promise<{
         user: User;
     }>;
+    addToWatchlist(req: any, productId: number): Promise<{
+        user: User;
+    }>;
+    removeFromWatchlist(req: any, productId: number): Promise<{
+        user: User;
+    }>;
 }

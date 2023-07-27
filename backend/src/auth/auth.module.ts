@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LocalStrategy } from './local.strategy'; 
-import { JwtModule } from '@nestjs/jwt'; // Import JwtModule
+import { JwtModule } from '@nestjs/jwt'; 
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { User } from '../user/user.entity';
@@ -12,7 +12,7 @@ import { JwtStrategy } from './jwt.strategy';
   imports: [
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
-      secret: 'your_secret_key_here', // Replace with your JWT secret key
+      secret: 'your_secret_key_here',
       signOptions: { expiresIn: '1h' },
     }),
   ],

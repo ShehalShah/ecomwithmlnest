@@ -6,11 +6,12 @@ import axios from 'axios';
 import { FaStar, FaHeart, FaShoppingCart } from 'react-icons/fa';
 
 const ImageDisplay = () => {
-  
+  const user = JSON.parse(sessionStorage.getItem('user'));
   const nav=useNavigate()
   const [isGenderOpen, setIsGenderOpen] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [recommendations, setRecommendations] = useState({});
+  const [perrecommendations, setPerrecommendations] = useState(null);
 
   const sections = [
     'Tshirts',
@@ -28,6 +29,7 @@ const ImageDisplay = () => {
 
   const addToClickedProducts = async (productId) => {
     const user = JSON.parse(sessionStorage.getItem('user'));
+    if(user){
     console.log(user.accessToken);
     const headers = {
       'Content-Type': 'application/json',
@@ -44,6 +46,10 @@ const ImageDisplay = () => {
 
     console.log(response);
     nav(`/${productId}`)
+  }
+  else{
+    nav(`/${productId}`)
+  }
   };
   
 
@@ -102,13 +108,48 @@ const ImageDisplay = () => {
     }
   };
 
+  const fetchPerRecommendations = async () => {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    try {
+      // const response = await axios.post('http://127.0.0.1:5000/recommend_by_category',  {
+      //   category: category,
+      // });
+      const response = await axios.post(
+        'http://127.0.0.1:5000/personalized_recommendations',
+        {
+          "watchlist": user.user.watchlist,
+          "search_history": user.user.search_history,
+          "clicked_products": user.user.clicked_products
+        },
+        {
+          headers: { 'Content-Type': 'application/json' }
+        }
+      );
+  
+
+      const data = await response.data;
+
+      setPerrecommendations(data)
+    } catch (error) {
+      console.error('Error fetching recommendations:', error);
+    }
+  };
+
+
   useEffect(() => {
     sections.forEach((section) => {
         fetchRecommendations(section);
       });
+      if(user){
+        console.log("fhreuf");
+        console.log(user);
+        fetchPerRecommendations()
+      }
+
   }, []);
 
   console.log(recommendations);
+  console.log("hi",perrecommendations);
 
   return (
     <>
@@ -175,6 +216,24 @@ const ImageDisplay = () => {
         </div>
         <div className="flex-grow bg-black text-white py-10">
         <div className="container mx-auto">
+
+        {perrecommendations?.map((product) => (
+                  <div key={product.id} className="w-[50%] h-auto cursor-pointer bg-white rounded-lg p-4" >
+                    <img src={product.link} alt={product.name} className="w-auto h-auto object-cover mb-4 rounded-lg" />
+                    <h2 className="text-lg font-bold text-black">{product.name}</h2>
+                    <div className='flex justify-between'>
+                  <button className="w-[45%] flex justify-center items-center bg-white text-black border border-black text-sm ">
+                    <FaHeart className="icon mr-2 text-lg" />
+                    Save in Watchlist
+                  </button>
+
+                  <button className=" w-[45%] justify-center flex items-center bg-black text-white border border-white text-sm">
+                    <FaShoppingCart className="icon mr-2 text-white text-lg" />
+                    Add to Cart
+                  </button>
+                  </div>
+                  </div>
+                ))}
           {Object.entries(recommendations).map(([section, products]) => (
             <div key={section}>
               <h2 className="text-2xl font-bold mb-4">{section}</h2>
