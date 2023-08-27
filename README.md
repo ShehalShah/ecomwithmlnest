@@ -1,4 +1,4 @@
-# ecomwithmlnest
+# ecom with ml and nestjs
 
 ## Technologies Used
 
